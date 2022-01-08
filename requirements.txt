@@ -5,3 +5,4 @@ python-dotenv
 altair
 bokeh==2.4.1
 requests
+yfinance
