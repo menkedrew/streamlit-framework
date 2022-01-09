@@ -6,6 +6,7 @@ import yfinance as yf
 from bokeh.models import ColumnDataSource
 from bokeh.models import DatetimeTickFormatter
 from math import pi
+from datetime import date
 
 try:
     fp = open('SP500_Tickers.txt')
@@ -16,7 +17,12 @@ finally:
 option = st.selectbox('Which Ticker would you like to select?: ', sp500, index=0, help="Choose S&P500 Stock tickers",)
 st.write('You selected: ', option)
 
-df = yf.download(option, start="2021-01-01", end="2021-12-31", group_by="Ticker")
+option_sdate = st.selectbox('What date range would you like?: ', ["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"], index=0, help="Choose a date range",)
+st.write('You selected: ', option_sdate)
+
+
+
+df = yf.download(option, group_by="Ticker", period = option_sdate)
 
 st.title(f"Stock Ticker for: {option}")
 
