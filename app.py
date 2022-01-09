@@ -17,12 +17,15 @@ finally:
 option = st.selectbox('Which Ticker would you like to select?: ', sp500, index=0, help="Choose S&P500 Stock tickers",)
 st.write('You selected: ', option)
 
-option_sdate = st.selectbox('What date range would you like?: ', ["1d","5d","1mo","3mo","6mo","1y","2y","5y","10y","ytd","max"], index=0, help="Choose a date range",)
-st.write('You selected: ', option_sdate)
+date_ranges = {'5d': '5 days', '1mo': '1 month','3mo': '3 month', '6mo': '6 month', '1y': '1 year', '2y': '2 year', '5y': '5 year', '10y': '10 year', 'ytd': 'year to date', 'max': 'max date range'}
 
+def prettydate (option):
+    return date_ranges.get(option)
 
+selected_date_range = st.selectbox('What date range would you like?: ', date_ranges.keys(), index=0, help="Choose a date range", format_func=prettydate)
+st.write('You selected: ', selected_date_range)
 
-df = yf.download(option, group_by="Ticker", period = option_sdate)
+df = yf.download(option, group_by="Ticker", period = selected_date_range)
 
 st.title(f"Stock Ticker for: {option}")
 
